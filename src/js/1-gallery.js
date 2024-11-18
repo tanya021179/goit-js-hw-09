@@ -3,7 +3,7 @@ const images = [
     preview:
       'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
     original:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg',
+      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
     description: 'Hokkaido Flower',
   },
   {
@@ -63,3 +63,33 @@ const images = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+const container = document.querySelector('.gallery');
+container.insertAdjacentHTML('beforeend', createMarkup(images));
+
+function createMarkup(arr) {
+  return arr
+    .map(
+      item => `
+     <li class="gallery-item">
+  <a class="gallery-link" href="${item.original}">
+    <img
+      class="gallery-image"
+      src="${item.preview}"
+      alt="${item.description}"
+    />
+  </a>
+</li>   
+        `
+    )
+    .join('');
+}
+
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+const newGallery = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  captions: true,
+  captionsData: 'alt',
+});
