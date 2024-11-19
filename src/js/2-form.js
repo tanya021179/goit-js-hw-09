@@ -20,8 +20,8 @@ function getFormData() {
   const data = localStorage.getItem('feedback-form-state');
   if (data) {
     const parseData = JSON.parse(data);
-    formData.email = parseData.email;
-    formData.message = parseData.message;
+    formData.email = parseData.email || '';
+    formData.message = parseData.message || '';
   }
   form.elements.email.value = formData.email;
   form.elements.message.value = formData.message;
@@ -32,9 +32,12 @@ form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
-  formData.email === '' || formData.message === ''
-    ? alert('Fill please all fields')
-    : console.log('Data:', formData);
-  event.currentTarget.reset();
-  localStorage.removeItem('feedback-form-state');
+
+  if (formData.email === '' || formData.message === '') {
+    alert('Fill please all fields');
+  } else {
+    console.log('Data:', formData);
+    event.currentTarget.reset();
+    localStorage.removeItem('feedback-form-state');
+  }
 }
